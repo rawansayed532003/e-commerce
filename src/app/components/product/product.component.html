@@ -1,0 +1,70 @@
+@if (loading) {
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+  <span [ngClass]="{ loader: loading }"></span>
+</div>
+} @else {
+<section [ngClass]="{ disabled: loadingAdd }" class="container my-5 pt-5">
+  <div class="mt-1">
+    <input
+      type="search"
+      class="form-control w-75 mx-auto my-5"
+      placeholder="Search ....."
+      [(ngModel)]="text"
+    />
+  </div>
+  <div class="row g-3">
+    @for (product of productList|search :text ; track product.id) {
+    <div class="col-md-3">
+      <div class="product">
+        <div [routerLink]="['/details', product.id]" class="cr">
+          <img
+            [src]="product.imageCover"
+            class="w-100 rounded-2"
+            [alt]="product.title"
+          />
+          <div class="p-2">
+            <h3 class="small text-main fw-bold">{{ product.category.name }}</h3>
+            <h4 class="h6 fw-bold">{{ product.title | termtext : 2 }} . . .</h4>
+            <div class="d-flex justify-content-between align-items-center">
+              <span>{{ product.price }} EGP</span>
+              <div>
+                @for(num of [1,2,3,4,5].slice(0,product.ratingsAverage) ;track $index){
+                  <span> <i class="fas fa-star rating-color"></i> </span>
+                }
+                @if(product.ratingsAverage%1!==0){
+                  <span> <i class="fa-solid fa-star-half-stroke rating-color"></i> </span>
+
+                }
+               
+               
+                <span class="text-muted"> {{ product.ratingsAverage }} </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="px-2 pb-4 d-flex align-items-center justify-content-center">
+          @if (product.id == ID) {
+          <div class="w-100 text-center"><i class="loader"></i></div>
+          } @else {
+          <button
+            class=" mx-4 w-100 mt-2"
+            (click)="addCart(product.id)"
+          >
+            Add to Cart
+          </button>
+          }
+          <span
+            [ngClass]="{
+              red: wishListCart.includes(product.id)
+            }"
+            class="cr"
+            (click)="addToWishList(product.id)"
+            ><i class="fa-solid fa-heart fa-xl"></i
+          ></span>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</section>
+}

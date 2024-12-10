@@ -1,0 +1,30 @@
+<section class="container bg-main-light rounded-4 shadow p-5 my-5 py-5">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h2 fw-bold">My Orders</h1>
+  </div>
+  @for (item of orderList; track item._id) {
+  <div class="row border-bottom mb-3 align-items-center">
+    <div class="col-md-2">
+      <div class="mb-3">
+        <img
+          [src]="item.product.imageCover"
+          class="w-100"
+          [alt]="item.product.title"
+        />
+      </div>
+    </div>
+    <div class="col-md-10 d-flex justify-content-between align-items-center">
+      <div>
+        <h3 class="h5 fw-bold">{{ item.product.title }}</h3>
+        <p class="fw-bold m-2">
+          <span class="fw-bold d-block"
+            >Number Of Products : {{ item.count }}</span
+          >
+          <span class="fw-bold d-block">Price : {{ item.price }} EGP</span>
+        </p>
+      </div>
+      <p class="btn-clear my-4 fw-bold">Purchased</p>
+    </div>
+  </div>
+  }
+</section>

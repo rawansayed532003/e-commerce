@@ -1,0 +1,65 @@
+<section class="bg-main-light shadow rounded-4 p-3">
+  @if (step == 1) {
+  <form [formGroup]="emailForm" (ngSubmit)="VerifyEmailRest()">
+    <h2 class="my-3 fw-bold">Please enter your Email</h2>
+    <label for="email">Email</label>
+    <input
+      formControlName="email"
+      type="email"
+      id="email"
+      class="form-control"
+    />
+    <button [disabled]="emailForm.invalid || btnLoaded" class="btn-main mt-2">
+      Verify @if (btnLoaded) {
+      <i class="fa fa-spin fa-spinner"></i>
+      }
+    </button>
+    @if (errorMsg) {
+    <p class="text-center red mt-4">* {{ errorMsg }}</p>
+    }
+  </form>
+  } @else if (step == 2) {
+  <form [formGroup]="codeForm" (ngSubmit)="VerifyCodeRest()">
+    <h2 class="my-3 fw-bold">Please enter your verification code</h2>
+    <label for="resetCode">resetCode</label>
+    <input
+      formControlName="resetCode"
+      type="text"
+      id="resetCode"
+      class="form-control"
+    />
+    <button [disabled]="codeForm.invalid || btnLoaded" class="btn-main mt-2">
+      Verify @if (btnLoaded) {
+      <i class="fa fa-spin fa-spinner"></i>
+      }
+    </button>
+    @if (errorMsg) {
+    <p class="text-center red mt-4">* {{ errorMsg }}</p>
+    }
+  </form>
+  } @else if (step == 3) {
+  <form [formGroup]="newPassForm" (ngSubmit)="rePassword()">
+    <h2 class="my-3 fw-bold">Reset your account password</h2>
+    <label for="email">Email</label>
+    <input
+      readonly
+      formControlName="email"
+      type="email"
+      id="email"
+      class="form-control"
+    />
+    <label for="newPassword">Re_Password</label>
+    <input
+      formControlName="newPassword"
+      type="password"
+      id="newPassword"
+      class="form-control"
+    />
+    <button [disabled]="newPassForm.invalid || btnLoaded" class="btn-main mt-2">
+      Verify @if (btnLoaded) {
+      <i class="fa fa-spin fa-spinner"></i>
+      }
+    </button>
+  </form>
+  }
+</section>

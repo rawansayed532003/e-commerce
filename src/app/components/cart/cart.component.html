@@ -1,0 +1,81 @@
+@if (loading) {
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+  <span [ngClass]="{ loader: loading }"></span>
+</div>
+} @else {
+<section class="container bg-main-light rounded-4 shadow p-5 my-5">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h2 fw-bold">Cart Shop</h1>
+    <button
+      [disabled]="productsOfCart.totalCartPrice == 0"
+      [routerLink]="['/orders', productsOfCart._id]"
+      class="btn btn-primary px-3 p-2 fw-bold"
+    >
+      Check Out
+    </button>
+  </div>
+  <div class="d-flex justify-content-between align-items-center">
+    <p class="fw-bold text-black">
+      Total Price :
+      <span class="text-main">{{ productsOfCart.totalCartPrice }}</span>
+    </p>
+    <p class="fw-bold text-black">
+      Total Number Of Items :
+      <span class="text-main">{{ numberOfItems }}</span>
+    </p>
+  </div>
+  @for (item of productsOfCart.products; track item.product.id) {
+  <div
+    [ngClass]="{
+      disabled: moveItems
+    }"
+    class="row border-bottom mb-3 align-items-center"
+  >
+    <div class="col-md-2">
+      <div class="mb-3">
+        <img
+          [src]="item.product.imageCover"
+          class="w-100"
+          [alt]="item.product.title"
+        />
+      </div>
+    </div>
+    <div class="col-md-10 d-flex justify-content-between align-items-center">
+      <div>
+        <h3 class="h5 fw-bold">{{ item.product.title }}</h3>
+        <p class="fw-bold m-2">
+          <span class="fw-bold">{{ item.price }} EGP</span>
+        </p>
+        <button
+          class="cr text-danger fw-bold ps-2 btn"
+          (click)="removeItem(item.product.id)"
+        >
+          <i class="fa-solid fa-trash"></i> Remove
+        </button>
+      </div>
+      <div class="d-flex align-items-center">
+        <span
+          class="border p-2 cr"
+          (click)="addItem(item.product.id, item.count + 1)"
+        >
+          <i class="fa-solid fa-plus fa-1x"></i>
+        </span>
+        <span class="p-2 fw-semibold">
+          {{ item.count }}
+        </span>
+        <span
+          class="border p-2 cr"
+          (click)="addItem(item.product.id, item.count - 1)"
+        >
+          <i class="fa-solid fa-minus fa-1x"></i>
+        </span>
+      </div>
+    </div>
+  </div>
+  }
+
+  <button class="btn-clear d-block mx-auto my-4 fw-bold" (click)="clearCart()">
+    Clear Your Cart
+  </button>
+</section>
+}

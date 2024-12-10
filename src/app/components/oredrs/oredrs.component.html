@@ -1,0 +1,57 @@
+<section class="container my-5">
+  <form [formGroup]="orderForm" (ngSubmit)="payment()">
+    <div class="my-4">
+      <label for="details">Details</label>
+      <input
+        formControlName="details"
+        type="text"
+        id="details"
+        class="form-control"
+      />
+      @if (orderForm.get('details')?.errors &&
+      orderForm.get('details')?.touched) { @if
+      (orderForm.get('details')?.getError('required')) {
+      <p class="red mt-2">* details is required</p>
+      } @else if(orderForm.get('details')?.getError('minlength')){
+      <p class="red mt-2">* details min length is 3</p>
+      } }
+    </div>
+    <div class="my-4">
+      <label for="phone">phone</label>
+      <input
+        formControlName="phone"
+        type="tel"
+        id="phone"
+        class="form-control"
+      />
+      @if (orderForm.get('phone')?.errors && orderForm.get('phone')?.touched) {
+      @if (orderForm.get('phone')?.getError('required')) {
+      <p class="red mt-2">* phone is required</p>
+      } @else if(orderForm.get('phone')?.getError('pattern')){
+      <p class="red mt-2">* invalid phone</p>
+      } }
+    </div>
+    <div class="my-4">
+      <label for="city">city</label>
+      <input
+        formControlName="city"
+        type="text"
+        id="city"
+        class="form-control"
+      />
+      @if (orderForm.get('city')?.errors && orderForm.get('city')?.touched){
+      <p class="red mt-2">* city is required</p>
+      }
+    </div>
+
+    <button
+      [disabled]="orderForm.invalid || isLoading"
+      type="submit"
+      class="btn btn-outline-info d-block w-100"
+    >
+      Pay now @if (isLoading) {
+      <i class="fa fa-spin fa-spinner"></i>
+      }
+    </button>
+  </form>
+</section>

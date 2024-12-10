@@ -1,0 +1,43 @@
+@if (loading) {
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+  <span [ngClass]="{ loader: loading }"></span>
+</div>
+
+} @else {
+<div [ngClass]="{ disabled: showSubCat }">
+  <section class="container my-5">
+    <div class="row">
+      @for (category of categories; track category._id) {
+      <div class="col-md-4 cr">
+        <div
+          class="border-categories product mt-5"
+          (click)="getSubCat(category._id, category.name)"
+        >
+          <img
+            [src]="category.image"
+            class="w-100 rounded-top-2"
+            height="300px"
+            [alt]="category.name"
+          />
+          <h1 class="h3 p-3 text-center bg-light m-0">
+            {{ category.name }}
+          </h1>
+        </div>
+      </div>
+      }
+    </div>
+  </section>
+  <section class="container my-5">
+    <h1 class="text-center text-main mb-5 fw-bold">{{ catName }}</h1>
+    <div class="row gy-4">
+      @for (subCat of subCategories; track $index) {
+      <div class="col-md-4">
+        <div class="border-categories product">
+          <h2 class="text-center p-3 fw-bold">{{ subCat.name }}</h2>
+        </div>
+      </div>
+      }
+    </div>
+  </section>
+</div>
+}
